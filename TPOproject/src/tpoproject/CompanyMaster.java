@@ -34,7 +34,7 @@ public class CompanyMaster extends javax.swing.JFrame {
 
         jLabel4.setText("Contact No");
 
-        jLabel5.setText("HR");
+        jLabel5.setText("HR Name");
 
         jButton1.setText("Submit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +112,7 @@ public class CompanyMaster extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        String sql = "insert into Company values('"+
+        String sql = "insert into Company(CompanyName,Address,Email,ContactNo,HR) values('"+
                 Companyname.getText()+"','"+
                 ComAddress.getText()+"','"+
                 Email.getText()+"','"+

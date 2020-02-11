@@ -9,7 +9,27 @@ public class Search extends javax.swing.JFrame {
     
     public Search() {
         initComponents();
+        branchFill();
         
+    }
+    public void branchFill(){
+    DBConnect x = new DBConnect();
+       try
+       {
+           String sql = "select * from Branch";
+           System.out.println(sql);
+           ResultSet rs = x.queryReturner(sql);
+             jComboBox1.removeAllItems();
+            while(rs.next())
+            {
+                jComboBox1.addItem(rs.getString(1));
+            }
+            rs.close();
+        }
+        catch(Exception ex)
+        {
+            
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -50,7 +70,11 @@ public class Search extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CSE", "EC", "IT", "MECH", "CIVIL", "IP", "EE", "EX", "ALL" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { ">=50", ">=60", ">=70" }));
 
@@ -142,18 +166,13 @@ public class Search extends javax.swing.JFrame {
         dt.addColumn("Email");
         dt.addColumn("Mobile");
         
-        String sql =null;
-        if(jComboBox1.getSelectedItem().equals("ALL"))
-        {
-sql="select name,branch,email,mobile from student "
-        + " where ";
-                }
-        else
-        {
-sql="select name,branch,email,mobile from student "
-        + "where branch ='"+
-        jComboBox1.getSelectedItem()+"' and ";    
-        }
+        
+        
+        
+        String sql = "select name,BranchName,email,mobile from Student,Branch "
+        + "where Bid =(select Bid from Branch where BranchName = '"+
+        jComboBox1.getSelectedItem()+"') and ";    
+        
         
         sql = sql +" highsch  "+
                 jComboBox2.getSelectedItem()+
@@ -167,7 +186,7 @@ sql="select name,branch,email,mobile from student "
        try
        {
            
-           
+           System.out.println(sql);
            ResultSet rs = x.queryReturner(sql);
            while(rs.next())
            {
@@ -187,6 +206,10 @@ sql="select name,branch,email,mobile from student "
            JOptionPane.showMessageDialog(null, ex);
        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -30,7 +30,7 @@ public class Result extends javax.swing.JFrame {
             jComboBox1.removeAllItems();
             while(rs.next())
             {
-                jComboBox1.addItem(rs.getString(1));
+                jComboBox1.addItem(rs.getString(2));
             }
             rs.close();
         }
@@ -127,10 +127,10 @@ public class Result extends javax.swing.JFrame {
         try
         {
             String sql = "select Name,Student.HighSch from Student, Campus where Student.Branch = "
-                    +"Campus.Branch AND Student.HighSch>= Campus.HighSch AND "
+                    +"Campus.BranchId AND Student.HighSch>= Campus.HighSch AND "
                     +"Student.HighSecondary >=Campus.HighSecondary AND "
-                    +"Student.Be >= Campus.Be AND Campus.CompanyName = '"+
-                    jComboBox1.getSelectedItem()+"'";
+                    +"Student.Be >= Campus.Be AND Campus.CompanyId in (select CompanyId from Company where CompanyName = '"+
+                    jComboBox1.getSelectedItem()+"')";
             System.out.println(sql);
             DBConnect x = new DBConnect();
             ResultSet rs = x.queryReturner(sql);
